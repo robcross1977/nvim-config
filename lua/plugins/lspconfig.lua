@@ -1,17 +1,30 @@
 ---nvim-lspconfig + mason: LSP server management and configuration.
 ---mason auto-installs servers; mason-lspconfig auto-enables them via vim.lsp.enable().
+---mason-tool-installer handles non-LSP tools (formatters, debuggers).
 ---Docs: https://github.com/neovim/nvim-lspconfig
 ---      https://github.com/mason-org/mason.nvim
 ---      https://github.com/mason-org/mason-lspconfig.nvim
+---      https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
 return {
   {
     "mason-org/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = { "ts_ls" },
+      ensure_installed = { "ts_ls", "hls" },
     },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "neovim/nvim-lspconfig",
+    },
+  },
+  {
+    -- Auto-install non-LSP Mason tools: formatters, debuggers, linters
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {
+      ensure_installed = {
+        "csharpier",   -- C# formatter (used by conform.nvim)
+        "netcoredbg",  -- .NET debugger (used by nvim-dap via easy-dotnet)
+      },
     },
   },
   {

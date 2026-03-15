@@ -59,7 +59,7 @@ return {
       test_runner = {
         viewmode = "float",
         enable_buffer_test_execution = true,
-        noBuild = true,
+        noBuild = false,
       },
       server = { use_visual_studio = is_windows },
     })
