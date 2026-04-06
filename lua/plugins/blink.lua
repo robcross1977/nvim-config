@@ -5,12 +5,13 @@
 return {
   "saghen/blink.cmp",
   version = "*",
+  build = "cargo build --release", -- compile the Rust fuzzy matcher from source
   dependencies = { "rafamadriz/friendly-snippets" },
   ft = { "cs", "fs", "vb", "xml", "csproj", "fsproj", "razor", "cshtml", "typescript", "typescriptreact", "javascript", "javascriptreact", "haskell" },
   ---@return nil
   config = function()
     require("blink.cmp").setup({
-      fuzzy = { implementation = "prefer_rust_with_warning" },
+      fuzzy = { implementation = "prefer_rust" },
       keymap = { preset = "default" },
       sources = {
         default = { "lsp", "snippets", "easy-dotnet", "path" },

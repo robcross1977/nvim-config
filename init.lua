@@ -9,6 +9,7 @@ for _, dir in ipairs({
   "/opt/homebrew/bin",           -- Homebrew (Apple Silicon)
   "/usr/local/bin",              -- Homebrew (Intel)
   vim.fn.expand("~/.dotnet/tools"), -- dotnet global tools (dotnet-easydotnet / Roslyn)
+  vim.fn.expand("~/.cargo/bin"), -- Rust toolchain (cargo build for blink.cmp)
 }) do
   if vim.fn.isdirectory(dir) == 1 and not vim.env.PATH:find(dir, 1, true) then
     vim.env.PATH = dir .. ":" .. vim.env.PATH
@@ -23,10 +24,15 @@ vim.opt.expandtab = true
 -- Always show sign column to prevent layout shift on diagnostics/git signs
 vim.opt.signcolumn = "yes"
 
--- Show diagnostics as virtual lines (inline, below the offending line)
+-- Show diagnostics as virtual lines (inline, below the offending line).
+-- Float: wrap long messages so nothing gets clipped at the window edge.
 vim.diagnostic.config({
   virtual_text = false,
   virtual_lines = true,
+  float = {
+    wrap = true,
+    max_width = math.floor(vim.o.columns * 0.7), -- cap at 70% of screen width
+  },
 })
 
 -- Filetype detection for Razor files (Blazor/ASP.NET)

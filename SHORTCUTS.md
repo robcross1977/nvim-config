@@ -23,18 +23,59 @@ Leader key: `Space`
 | `gi` | Go to implementation |
 | `gr` | Find all usages / references |
 | `<leader>rn` | Rename symbol |
-| `<leader>ca` | Code actions |
+| `<leader>ca` | Code actions / suggestions (normal & visual) |
 | `<leader>k` | Signature help |
 
 ## Diagnostics (Errors / Warnings)
 
 | Key | Action |
 |---|---|
-| `<leader>d` | Show diagnostic on current line |
-| `gl` | Show diagnostic on current line (alt) |
+| `gl` | Show diagnostic float on current line (LSP) |
+| `<leader>d` | Show diagnostic float on current line |
 | `<leader>D` | List all diagnostics (picker) |
 | `[d` | Jump to previous diagnostic |
 | `]d` | Jump to next diagnostic |
+
+> Tip: `gl` or `<leader>d` to read the error → `<leader>ca` to pick a fix.
+
+## Trouble (Diagnostics List)
+
+| Key | Action |
+|---|---|
+| `<leader>xx` | Toggle all diagnostics (Trouble) |
+| `<leader>xX` | Toggle buffer diagnostics (Trouble) |
+| `<leader>xL` | Toggle location list (Trouble) |
+| `<leader>xQ` | Toggle quickfix list (Trouble) |
+| `]x` | Next trouble item (or next quickfix if closed) |
+| `[x` | Prev trouble item (or prev quickfix if closed) |
+
+## Completion (blink.cmp)
+
+| Key | Action |
+|---|---|
+| `<C-space>` | Show completions |
+| `<C-e>` | Hide completions |
+| `<CR>` or `<C-y>` | Accept selected item |
+| `<Tab>` / `<S-Tab>` | Select next / prev item |
+| `<C-n>` / `<C-p>` | Select next / prev item |
+| `<C-b>` / `<C-f>` | Scroll docs up / down |
+
+## Git (gitsigns)
+
+| Key | Action |
+|---|---|
+| `]h` | Next git hunk |
+| `[h` | Prev git hunk |
+| `<leader>hs` | Stage hunk |
+| `<leader>hr` | Reset hunk |
+| `<leader>hS` | Stage buffer |
+| `<leader>hu` | Undo stage hunk |
+| `<leader>hR` | Reset buffer |
+| `<leader>hp` | Preview hunk |
+| `<leader>hb` | Blame line (full) |
+| `<leader>hd` | Diff this |
+| `<leader>hD` | Diff this (cached) |
+| `ih` | Select hunk (visual/operator text object) |
 
 ## Terminal
 
@@ -80,3 +121,4 @@ Leader key: `Space`
 | `:Secrets` | .NET user secrets |
 | `:Mason` | LSP server manager |
 | `:Lazy` | Plugin manager |
+| `:Trouble` | Open Trouble diagnostics panel |
