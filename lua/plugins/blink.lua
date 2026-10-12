@@ -1,31 +1,26 @@
----blink.cmp: completion UI/engine. Configured with easy-dotnet.nvim as a NuGet package completion source.
----friendly-snippets provides a curated snippet library (C#, TypeScript, etc.).
+---blink.cmp: completion UI/engine. LSP capabilities are registered automatically (vim.lsp.config("*")).
+---.csproj/.fsproj NuGet completion now comes from easy-dotnet's ProjX LSP, so no custom source is needed.
+---friendly-snippets provides a curated snippet library (C#, TypeScript, React, Next.js, etc.).
 ---Docs: https://github.com/saghen/blink.cmp
----easy-dotnet integration: https://github.com/GustavEikaas/easy-dotnet.nvim?tab=readme-ov-file
 return {
   "saghen/blink.cmp",
-  version = "*",
+  version = "1.*",
   build = "cargo build --release", -- compile the Rust fuzzy matcher from source
   dependencies = { "rafamadriz/friendly-snippets" },
-  ft = { "cs", "fs", "vb", "xml", "csproj", "fsproj", "razor", "cshtml", "typescript", "typescriptreact", "javascript", "javascriptreact", "haskell" },
-  ---@return nil
-  config = function()
-    require("blink.cmp").setup({
-      fuzzy = { implementation = "prefer_rust" },
-      keymap = { preset = "default" },
-      sources = {
-        default = { "lsp", "snippets", "easy-dotnet", "path" },
-        providers = {
-          ["easy-dotnet"] = {
-            name = "easy-dotnet",
-            enabled = true,
-            module = "easy-dotnet.completion.blink",
-            score_offset = 10000,
-            async = true,
-          },
-        },
-      },
-    })
-  end,
+  event = { "InsertEnter", "CmdlineEnter" },
+  ---@module "blink.cmp"
+  ---@type blink.cmp.Config
+  opts = {
+    fuzzy = { implementation = "prefer_rust" },
+    keymap = { preset = "default" },
+    completion = {
+      documentation = { auto_show = true, auto_show_delay_ms = 200 },
+      -- Syntax-highlight LSP completion labels (Tailwind/CSS colour swatches are on by default)
+      menu = { draw = { treesitter = { "lsp" } } },
+    },
+    signature = { enabled = true },
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
+    },
+  },
 }
-

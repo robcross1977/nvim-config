@@ -12,7 +12,12 @@ return {
       { "<leader>F", group = "fzf-lua" },
       { "<leader>b", group = "buffer" },
       { "<leader>u", group = "ui" },
-      { "<leader>s", group = "search" },
+      { "<leader>s", group = "search / symbols" },
+      { "<leader>c", group = "code" },
+      { "<leader>d", group = "debug" },
+      { "<leader>f", group = "find" },
+      { "<leader>n", group = ".NET" },
+      { "<leader>T", group = "test" },
     },
   },
 }

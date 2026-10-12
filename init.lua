@@ -41,7 +41,42 @@ vim.filetype.add({
     razor = "razor",
     cshtml = "razor",
   },
+  -- .NET config files allow comments; treat them as JSONC so jsonls doesn't flag every comment
+  pattern = {
+    [".*/appsettings[^/]*%.json"] = "jsonc",
+    [".*/launchSettings%.json"] = "jsonc",
+  },
 })
+
+-- JSON: 2-space indent, no wrapping, treesitter folds (za/zc/zo, zM/zR), all open by default
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_json", { clear = true }),
+  pattern = { "json", "jsonc", "json5" },
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+    vim.wo.wrap = false
+    vim.wo.conceallevel = 0 -- keep the quotes visible
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.wo.foldlevel = 99
+  end,
+})
+
+-- Pretty-print the buffer as JSON with jq. Works on minified JSON that snacks.bigfile has
+-- stripped of highlighting/LSP, and restores the json filetype afterwards.
+vim.keymap.set("n", "<leader>cj", function()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local out = vim.fn.systemlist({ "jq", "--indent", "2", "." }, lines)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("jq: " .. table.concat(out, "\n"), vim.log.levels.ERROR)
+    return
+  end
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, out)
+  if vim.bo.filetype ~= "json" and vim.bo.filetype ~= "jsonc" then
+    vim.bo.filetype = "json"
+  end
+end, { desc = "Pretty-print JSON (jq)" })
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

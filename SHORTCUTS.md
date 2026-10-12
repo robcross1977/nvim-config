@@ -11,32 +11,52 @@ Leader key: `Space`
 | `<leader>fb` | Buffers |
 | `<leader>fc` | Find config file |
 | `<leader>/` | Grep |
-| `<leader>e` | File explorer |
+| `<leader>e` | File explorer (`A` inside it: new .NET item from template) |
 
-## LSP (TypeScript / .NET)
+## LSP (TypeScript / React / .NET)
 
 | Key | Action |
 |---|---|
 | `K` | Hover docs / JSDoc |
-| `gd` | Go to definition |
+| `gd` | Go to definition (picker) |
 | `gD` | Go to declaration |
-| `gi` | Go to implementation |
-| `gr` | Find all usages / references |
+| `gi` | Go to implementation (picker) |
+| `gy` | Go to type definition (picker) |
+| `gr` | Find all usages / references (picker) |
 | `<leader>rn` | Rename symbol |
 | `<leader>ca` | Code actions / suggestions (normal & visual) |
+| `<leader>cR` | Rename file (updates imports) |
+| `<leader>cf` | Format buffer / selection |
+| `<leader>cj` | Pretty-print JSON with jq (fixes minified JSON opened as "bigfile") |
+| `<leader>ss` / `<leader>sS` | Document / workspace symbols |
 | `<leader>k` | Signature help |
+| `<leader>uh` | Toggle inlay hints |
+| `<leader>uf` / `<leader>uF` | Toggle format on save (global / buffer) |
+
+## TypeScript / JavaScript
+
+TS 7+ projects use the native `tsc --lsp`; everything else uses vtsls. ESLint, Biome, Oxlint and Tailwind attach only when the project uses them. Format on save: ESLint fix → Biome / oxfmt / Prettier (whichever the project is set up for).
+
+| Key | Action |
+|---|---|
+| `<leader>co` | Organize imports |
+| `<leader>cM` | Add missing imports |
+| `<leader>cu` | Remove unused imports |
+| `<leader>cD` | Fix all (TS) |
+| `<leader>cE` | ESLint fix all |
+| `gR` | File references (vtsls) |
+| `<leader>cV` | Select workspace TypeScript version (vtsls) |
 
 ## Diagnostics (Errors / Warnings)
 
 | Key | Action |
 |---|---|
-| `gl` | Show diagnostic float on current line (LSP) |
-| `<leader>d` | Show diagnostic float on current line |
+| `gl` | Show diagnostic float on current line |
 | `<leader>D` | List all diagnostics (picker) |
 | `[d` | Jump to previous diagnostic |
 | `]d` | Jump to next diagnostic |
 
-> Tip: `gl` or `<leader>d` to read the error → `<leader>ca` to pick a fix.
+> Tip: `gl` to read the error → `<leader>ca` to pick a fix.
 
 ## Trouble (Diagnostics List)
 
@@ -66,10 +86,9 @@ Leader key: `Space`
 |---|---|
 | `]h` | Next git hunk |
 | `[h` | Prev git hunk |
-| `<leader>hs` | Stage hunk |
+| `<leader>hs` | Stage / unstage hunk |
 | `<leader>hr` | Reset hunk |
 | `<leader>hS` | Stage buffer |
-| `<leader>hu` | Undo stage hunk |
 | `<leader>hR` | Reset buffer |
 | `<leader>hp` | Preview hunk |
 | `<leader>hb` | Blame line (full) |
@@ -103,8 +122,56 @@ Leader key: `Space`
 
 | Key | Action |
 |---|---|
-| `Ctrl+p` | Run .NET project |
+| `Ctrl+p` | Run default project |
+| `<leader>nr` / `<leader>nR` | Run / run with launch profile |
+| `<leader>nw` | Watch (hot reload) |
+| `<leader>nd` / `<leader>nD` | Debug project / attach to process |
+| `<leader>nb` / `<leader>nB` | Build project / solution → quickfix |
+| `<leader>nt` / `<leader>nT` | Test runner window / test solution |
+| `<leader>ne` / `<leader>nE` | Workspace errors / warnings |
+| `<leader>na` | Add NuGet package |
+| `<leader>no` | Outdated packages (then `<leader>pu` / `<leader>pa` to upgrade) |
+| `<leader>nn` | New from template |
+| `<leader>ns` | Select solution |
+| `<leader>nx` / `<leader>nc` | Restore / clean |
+| `<leader>nS` | User secrets |
+| `<leader>ar` | Add project reference (in .csproj) |
 | `T` | Open variable viewer (in debugger) |
+
+## Debugging (nvim-dap)
+
+.NET configs come from easy-dotnet; JS/TS has Node, attach, Next.js server and Chrome configs. A project's `.vscode/launch.json` is picked up too.
+
+| Key | Action |
+|---|---|
+| `F5` / `Shift+F5` | Start or continue / stop |
+| `F9` or `<leader>db` | Toggle breakpoint |
+| `F10` / `F11` / `Shift+F11` | Step over / into / out |
+| `<leader>dB` | Conditional breakpoint |
+| `<leader>dl` | Logpoint |
+| `<leader>dC` | Run to cursor |
+| `<leader>dL` | Run last |
+| `<leader>dt` | Terminate |
+| `<leader>dX` | Clear breakpoints |
+| `<leader>dr` | Toggle REPL |
+| `<leader>dk` / `<leader>dj` | Stack frame up / down |
+| `<leader>du` | Toggle debug UI |
+| `<leader>de` | Eval expression (normal & visual) |
+
+## Testing (neotest: .NET, Vitest, Jest)
+
+| Key | Action |
+|---|---|
+| `<leader>Tt` | Run nearest test |
+| `<leader>Tf` | Run file |
+| `<leader>TA` | Run all (cwd) |
+| `<leader>Tl` | Run last |
+| `<leader>Td` | Debug nearest test |
+| `<leader>Tw` | Watch file |
+| `<leader>Ts` | Summary |
+| `<leader>To` / `<leader>TO` | Output / output panel |
+| `<leader>TS` | Stop |
+| `]t` / `[t` | Next / prev failed test |
 
 ## Other
 
@@ -117,7 +184,7 @@ Leader key: `Space`
 
 | Command | Action |
 |---|---|
-| `:Dotnet` | .NET commands |
+| `:Dotnet` | .NET commands (`:Dotnet ef …`, `:Dotnet diagnostic`, …) |
 | `:Secrets` | .NET user secrets |
 | `:Mason` | LSP server manager |
 | `:Lazy` | Plugin manager |

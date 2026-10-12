@@ -34,7 +34,20 @@ return {
   indent = { enabled = true },
   input = { enabled = true },
   notifier = { enabled = true, timeout = 3000 },
-  picker = { enabled = true },
+  picker = {
+    enabled = true,
+    sources = {
+      explorer = {
+        -- `A` in the explorer: create a .NET item (class/interface/…) from easy-dotnet templates
+        win = { list = { keys = { ["A"] = "explorer_add_dotnet" } } },
+        actions = {
+          explorer_add_dotnet = function(picker)
+            require("easy-dotnet").create_item(picker:dir())
+          end,
+        },
+      },
+    },
+  },
   quickfile = { enabled = true },
   scope = { enabled = true },
   scroll = { enabled = true },

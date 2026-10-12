@@ -32,9 +32,8 @@ return {
   { "<c-/>", toggle_terminal, desc = "Toggle Terminal", mode = { "n", "t" } },
   { "<c-_>", toggle_terminal, desc = "which_key_ignore", mode = { "n", "t" } },
   -- Diagnostics
-  { "<leader>d", function() vim.diagnostic.open_float() end, desc = "Show Diagnostic" },
   { "<leader>D", function() Snacks.picker.diagnostics() end, desc = "All Diagnostics" },
-  { "[d", function() vim.diagnostic.goto_prev() end, desc = "Previous Diagnostic" },
-  { "]d", function() vim.diagnostic.goto_next() end, desc = "Next Diagnostic" },
+  { "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc = "Previous Diagnostic" },
+  { "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, desc = "Next Diagnostic" },
 }
 
