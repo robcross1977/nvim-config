@@ -5,6 +5,7 @@ vim.g.maplocalleader = "\\"
 -- Ensure critical tool dirs are in PATH.
 -- Homebrew (tree-sitter CLI, curl, etc.) and dotnet global tools may be missing
 -- when nvim is launched from a GUI or a shell that skips the full profile.
+local path_sep = vim.fn.has("win32") == 1 and ";" or ":"
 for _, dir in ipairs({
   "/opt/homebrew/bin",           -- Homebrew (Apple Silicon)
   "/usr/local/bin",              -- Homebrew (Intel)
@@ -12,7 +13,7 @@ for _, dir in ipairs({
   vim.fn.expand("~/.cargo/bin"), -- Rust toolchain (cargo build for blink.cmp)
 }) do
   if vim.fn.isdirectory(dir) == 1 and not vim.env.PATH:find(dir, 1, true) then
-    vim.env.PATH = dir .. ":" .. vim.env.PATH
+    vim.env.PATH = dir .. path_sep .. vim.env.PATH
   end
 end
 

@@ -26,9 +26,15 @@ if not is_valid_dir(config_path) then
   explorer_config.enabled = false
 end
 
+-- Terminal shell: PowerShell on Windows (pwsh 7 if installed), bash elsewhere
+local terminal_shell = "bash"
+if vim.fn.has("win32") == 1 then
+  terminal_shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell"
+end
+
 return {
   bigfile = { enabled = true },
-  terminal = { shell = "bash", win = { wo = { winbar = "" } } },
+  terminal = { shell = terminal_shell, win = { wo = { winbar = "" } } },
   dashboard = { enabled = true },
   explorer = explorer_config,
   indent = { enabled = true },
