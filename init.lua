@@ -17,10 +17,23 @@ for _, dir in ipairs({
   end
 end
 
--- Indentation: 4 spaces, expand tabs to spaces
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+-- Indentation: 2 spaces by default, expand tabs to spaces (C#/Razor get 4 below)
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("user_indent", { clear = true }),
+  pattern = { "cs", "razor" },
+  callback = function()
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
+  end,
+})
+
+-- Hybrid line numbers: absolute on the cursor line, relative everywhere else
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- Always show sign column to prevent layout shift on diagnostics/git signs
 vim.opt.signcolumn = "yes"
@@ -49,13 +62,11 @@ vim.filetype.add({
   },
 })
 
--- JSON: 2-space indent, no wrapping, treesitter folds (za/zc/zo, zM/zR), all open by default
+-- JSON: no wrapping, treesitter folds (za/zc/zo, zM/zR), all open by default
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("user_json", { clear = true }),
   pattern = { "json", "jsonc", "json5" },
   callback = function()
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
     vim.wo.wrap = false
     vim.wo.conceallevel = 0 -- keep the quotes visible
     vim.wo.foldmethod = "expr"
